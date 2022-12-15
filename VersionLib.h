@@ -139,6 +139,19 @@ public:
 						}
 					}
 				}
+
+				{
+					VS_FIXEDFILEINFO* pFileInfo = nullptr;
+					UINT puLenFileInfo = 0;
+					if (VerQueryValue(verData, TEXT("\\"), (LPVOID*)&pFileInfo, &puLenFileInfo))
+					{
+						major = (pFileInfo->dwFileVersionMS >> 16) & 0xffff;
+						minor = (pFileInfo->dwFileVersionMS >> 0) & 0xffff;
+						revision = (pFileInfo->dwFileVersionLS >> 16) & 0xffff;
+						build = (pFileInfo->dwFileVersionLS >> 0) & 0xffff;
+						return true;
+					}
+				}
 			}
 		}
 
